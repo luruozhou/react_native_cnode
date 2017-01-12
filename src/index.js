@@ -6,7 +6,7 @@ import {
   View
 } from 'react-native';
 
-import InfoList from './pages/InfoList';
+import App from './App';
 
 
-AppRegistry.registerComponent('react_native_demo', () => InfoList);
+AppRegistry.registerComponent('react_native_demo', () => App);

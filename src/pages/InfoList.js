@@ -52,7 +52,7 @@ export default class InfoList extends Component {
                 <ListView
                     dataSource={this.state.dataSource.cloneWithRows(this.state.articles)}
                     style={styles.list}
-                    renderRow={this.renderArticleItem}
+                    renderRow={this.renderArticleItem.bind(this)}
                     enableEmptySections={true}
                 />
             </View>
@@ -60,8 +60,9 @@ export default class InfoList extends Component {
     }
 
     renderArticleItem(article) {
+        let {navigator} =this.props;
         return (
-            <ArticleItem article={article} />
+            <ArticleItem article={article} navigator={navigator}/>
         )
     }
 }
@@ -71,11 +72,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#eeeeee',
+        backgroundColor: '#aaa',
     },
-    list:{
-        backgroundColor:'#fff',
+    list: {
+        backgroundColor: '#eee',
+        marginLeft: 4,
+        marginRight: 4,
+        marginTop: 4,
     }
 });
 
-AppRegistry.registerComponent('react_native_demo', () => infoList);

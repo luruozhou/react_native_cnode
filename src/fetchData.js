@@ -6,8 +6,8 @@ import * as config from "./config";
  * @param pageSize
  * @returns {*|Promise.<TResult>}
  */
-export function getArticles(pageNo, pageSize) {
-    let REQUEST_URL = config.cnodeHost.host + '/topics?page=' + pageNo + '&tab=ask&limit=' + pageSize;
+export function getArticles(sKey,pageNo, pageSize) {
+    let REQUEST_URL = config.cnodeHost.host + '/topics?page=' + pageNo + '&tab='+sKey+'&limit=' + pageSize;
     return fetch(REQUEST_URL, {
         method: "get"
     })

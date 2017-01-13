@@ -12,6 +12,7 @@ import {getArticleInfoById} from '../fetchData';
 import Header from '../components/header';
 import ArticleContent from '../components/articleContent';
 import ReplyItem from '../components/replyItem';
+import LoadingView from '../components/LoadingView';
 
 export default class ArticleInfo extends Component {
     constructor(props) {
@@ -30,15 +31,15 @@ export default class ArticleInfo extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props,1111111)
+        this.setState({
+            loading: true
+        })
         InteractionManager.runAfterInteractions(() => {
-            this.setState({
-                loading: true
-            })
             getArticleInfoById(this.props.tid)
                 .then(data => {
                     this.setState({
-                        article: data
+                        article: data,
+                        loading:false
                     })
                 })
         })
@@ -47,6 +48,13 @@ export default class ArticleInfo extends Component {
     render() {
         let {navigator} =this.props;
         const article = this.state.article;
+        if (this.state.loading) {
+            return (
+                <View style={styles.container}>
+                    <LoadingView />
+                </View>
+            )
+        }
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -55,7 +63,7 @@ export default class ArticleInfo extends Component {
                         {this.renderArticleTitle()}
                         <ArticleContent htmlContent={article.content}/>
                         <View style={styles.replyBox}>
-                            {article.replies&&article.replies.map((item,i)=>{
+                            {article.replies && article.replies.map((item, i) => {
                                 return (
                                     <ReplyItem reply={item} index={i} key={item.id}/>
                                 )
@@ -135,8 +143,6 @@ const styles = StyleSheet.create({
     mr4: {
         marginRight: 4
     },
-    replyBox:{
-
-    }
+    replyBox: {}
 });
 

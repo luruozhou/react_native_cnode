@@ -8,37 +8,52 @@ import {
     ListView
 } from 'react-native';
 import {getArticles} from '../fetchData';
-import Header from '../components/header';
-import ArticleItem from '../components/articleItem';
+import TabHeader from '../components/tabHeader';
+import LoadingView from '../components/LoadingView';
+import ArticleList from '../components/articleList';
 
 export default class InfoList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: new ListView.DataSource({
-                rowHasChanged: (row1, row2) => row1 !== row2,
-            }),
             articles: [],
             loading: false,
             isRefreshing: false,
             hasLoadData: false,
             pageNo: 1,
-            pageSize: 10
+            pageSize: 10,
+            titleInfo: [
+                {
+                    word: '分享',
+                    key: 'share'
+                },
+                {
+                    word: '问答',
+                    key: 'ask'
+                },
+                {
+                    word: '招聘',
+                    key: 'job'
+                }
+            ],
+            sKey: 'share',
+            needUpdate: false
         };
     }
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
             this.setState({
-                loading: true
+                loading: true,
+                needUpdate: true
             })
-            getArticles(this.state.pageNo, this.state.pageSize)
+            getArticles(this.state.sKey, this.state.pageNo, this.state.pageSize)
                 .then(data => {
                     if (data && data.length > 0) {
                         this.setState({
                             articles: data,
                             hasLoadData: true,
-                            loading: false
+                            loading: false,
                         })
                     }
                 })
@@ -46,32 +61,53 @@ export default class InfoList extends Component {
     }
 
     render() {
+        let {navigator} =this.props;
+
+        let header = (<TabHeader tabList={this.state.titleInfo} active={0}
+                                 onTabChnange={(item,i)=>this.onTabChnange(item,i)}>
+        </TabHeader>)
+
         return (
             <View style={styles.container}>
-                <Header title="问答"></Header>
-                <ListView
-                    dataSource={this.state.dataSource.cloneWithRows(this.state.articles)}
-                    style={styles.list}
-                    renderRow={this.renderArticleItem.bind(this)}
-                    enableEmptySections={true}
-                />
+                {header}
+                <ArticleList articles={this.state.articles} navigator={navigator} loading={this.state.loading}
+                             needUpdate={this.state.needUpdate}/>
             </View>
         );
     }
 
-    renderArticleItem(article) {
-        let {navigator} =this.props;
-        return (
-            <ArticleItem article={article} navigator={navigator}/>
-        )
+    onTabChnange(item, i) {
+        if (item.key == this.state.sKey) {
+            this.setState({
+                needUpdate: false
+            });
+            return;
+        }
+        this.setState({
+            loading: true,
+            sKey: item.key,
+            needUpdate: true
+            // articles:[]
+        });
+        getArticles(item.key, this.state.pageNo, this.state.pageSize)
+            .then(data => {
+                if (data && data.length > 0) {
+                    this.setState({
+                        articles: data,
+                        hasLoadData: true,
+                        loading: false,
+                    })
+                }
+            })
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
+        // alignItems: 'center',
         backgroundColor: '#aaa',
     },
     list: {

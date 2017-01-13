@@ -87,7 +87,6 @@ export default class InfoList extends Component {
             loading: true,
             sKey: item.key,
             needUpdate: true
-            // articles:[]
         });
         getArticles(item.key, this.state.pageNo, this.state.pageSize)
             .then(data => {
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         // alignItems: 'center',
-        backgroundColor: '#aaa',
+        backgroundColor: '#eee',
     },
     list: {
         backgroundColor: '#eee',

@@ -28,13 +28,14 @@ export default class ArticleItem extends Component {
         const {article} = this.props;
         return (
             <TouchableHighlight
+                underlayColor="transparent"
                 onPress={()=>this.showArticleInfo(article)}
             >
                 <View style={styles.container}>
                     <Image style={styles.avatar} source={{uri:article.author.avatar_url}}/>
                     <View style={styles.content}>
                         <View style={styles.header}>
-                            {!article.top && <Text style={styles.top}>置顶</Text>}
+                            {article.top && <Text style={styles.top}>置顶</Text>}
                             {article.good && <Text style={styles.top}>精华</Text>}
                             <Text style={styles.title}>{article.title}</Text>
                         </View>

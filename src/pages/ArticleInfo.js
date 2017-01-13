@@ -57,8 +57,8 @@ export default class ArticleInfo extends Component {
         }
         return (
             <View style={styles.container}>
+                <Header title="帖子详情" needBack={true} navigator={navigator}></Header>
                 <ScrollView>
-                    <Header title="帖子详情" needBack={true} navigator={navigator}></Header>
                     <View style={styles.outerBox}>
                         {this.renderArticleTitle()}
                         <ArticleContent htmlContent={article.content}/>
@@ -110,8 +110,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#eee',
-        paddingLeft: 10,
-        paddingRight: 10,
+
     },
     outerBox: {
         backgroundColor: '#fff',
@@ -121,6 +120,8 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingTop: 10,
         paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
     },
     titleBox: {
         borderBottomWidth: 1,

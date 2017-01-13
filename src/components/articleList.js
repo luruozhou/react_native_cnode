@@ -59,7 +59,6 @@ export default class ArticleList extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        // 比较props或者states，返回true则更新照常，返回false则取消更新，且不会调用下面的两个生命周期函数
         if (nextProps.needUpdate) {
             console.log('更新')
             return true;
@@ -80,8 +79,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        // alignItems: 'center',
-        backgroundColor: '#aaa',
+        backgroundColor: '#eee',
     },
     list: {
         backgroundColor: '#eee',

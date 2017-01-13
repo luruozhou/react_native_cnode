@@ -34,12 +34,14 @@ export default class TabHeader extends Component {
             <View style={styles.container}>
                 {tabList.map((item, i) => {
                     return (
-                        <TouchableHighlight onPress={()=>{
-                            this.setState({
-                                activeIndex:i
-                            })
-                            return onTabChnange&&onTabChnange(item,i);
-                        }} key={i} style={styles.tabItem}>
+                        <TouchableHighlight underlayColor="transparent"
+                                            onPress={()=>{
+                                                this.setState({
+                                                    activeIndex:i
+                                                })
+                                                return onTabChnange&&onTabChnange(item,i);
+                                            }}
+                                            key={i} style={styles.tabItem}>
                             <View style={styles.tabItem}>
                                 <Text style={[styles.word,this.state.activeIndex==i&&styles.active]}>{item.word}</Text>
                             </View>

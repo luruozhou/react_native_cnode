@@ -24,6 +24,14 @@ export default class InfoList extends Component {
             pageSize: 10,
             titleInfo: [
                 {
+                    word: '全部',
+                    key: 'all'
+                },
+                {
+                    word: '精华',
+                    key: 'good'
+                },
+                {
                     word: '分享',
                     key: 'share'
                 },
@@ -36,7 +44,7 @@ export default class InfoList extends Component {
                     key: 'job'
                 }
             ],
-            sKey: 'share',
+            sKey: 'all',
             needUpdate: false
         };
     }
